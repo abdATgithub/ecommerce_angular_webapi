@@ -39,7 +39,7 @@ namespace API.Controllers
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(productSpecParams);
 
-            var countSpec = new ProductsWithTypesAndBrandsSpecification(productSpecParams);
+            var countSpec = new ProductWithFiltersForCountSpecification(productSpecParams);
 
             var totalItems = await _productsRepo.CountAsync(countSpec);
 
@@ -47,7 +47,8 @@ namespace API.Controllers
 
             var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDTO>>(products);
 
-            return Ok(new Pagination<ProductToReturnDTO>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, data));
+            return Ok(new Pagination<ProductToReturnDTO>(productSpecParams.PageIndex, 
+                productSpecParams.PageSize, totalItems, data));
         }
 
         [HttpGet("brands")]
