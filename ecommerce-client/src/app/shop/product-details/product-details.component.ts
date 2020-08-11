@@ -1,3 +1,4 @@
+import { BasketService } from './../../basket/basket.service';
 import { ShopService } from './../shop.service';
 import { IProduct } from './../../shared/models/product';
 import { Component, OnInit } from '@angular/core';
@@ -11,15 +12,34 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 })
 export class ProductDetailsComponent implements OnInit {
   product: IProduct;
+  quantity = 1;
 
   constructor(private shopService: ShopService,
               private activatedRoute: ActivatedRoute,
-              private breadcrumbService: BreadcrumbService) {
+              private breadcrumbService: BreadcrumbService,
+              private basketService: BasketService) {
     this.breadcrumbService.set('@productDetails', '');
   }
 
   ngOnInit(): void {
     this.loadProduct();
+  }
+
+  // tslint:disable-next-line: typedef
+  addItemToBasket() {
+    this.basketService.addItemToBasket(this.product, this.quantity);
+  }
+
+  // tslint:disable-next-line: typedef
+  incrementQuantity() {
+    this.quantity++;
+  }
+
+  // tslint:disable-next-line: typedef
+  decrementQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
   }
 
   // tslint:disable-next-line: typedef
