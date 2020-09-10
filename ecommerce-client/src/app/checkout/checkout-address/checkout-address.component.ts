@@ -1,3 +1,4 @@
+import { IAddress } from './../../shared/models/address';
 import { AccountService } from './../../account/account.service';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
@@ -18,12 +19,14 @@ export class CheckoutAddressComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   saveUserAddress() {
-    this.acctService.updateUserAddress(this.checkoutForm.get('addressForm').value).subscribe(() => {
-      this.toastr.success('Address saved successfully!');
-    }, error => {
-      this.toastr.error(error.message);
-      console.log(error);
-    });
+    this.acctService.updateUserAddress(this.checkoutForm.get('addressForm').value)
+      .subscribe((address: IAddress) => {
+        this.toastr.success('Address saved successfully!');
+        this.checkoutForm.get('addressForm').reset(address);
+      }, error => {
+        this.toastr.error(error.message);
+        console.log(error);
+      });
   }
 
 }

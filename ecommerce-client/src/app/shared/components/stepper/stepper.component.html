@@ -4,8 +4,9 @@
       <button
         class="nav-link py-3 text-uppercase font-weight-bold btn-block"
         [class.active]="selectedIndex === i"
-        (click)="onClick(i)">
-        {{ step.label }} <!-- : {{ step.completed }} -->
+        (click)="onClick(i)"
+        [disabled]="true">
+        {{ step.label }}
       </button>
     </li>
   </ul>
